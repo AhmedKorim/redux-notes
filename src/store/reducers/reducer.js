@@ -1,7 +1,7 @@
 const intialState = {
-    counter: 0;
+    counter: 0
 }
-const reducer = (state, action) => {
+const reducer = (state = intialState, action) => {
     return state;
 }
-
+export default reducer;
