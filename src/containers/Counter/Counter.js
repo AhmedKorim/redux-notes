@@ -27,14 +27,27 @@ class Counter extends Component {
     }
 
     render() {
+        console.log(this.props);
         return (
             <div>
-                <CounterOutput value={this.props.counter}/>
-                <CounterControl label="Increment" clicked={this.props.onIncrementCounter}/>
-                <CounterControl label="Decrement" clicked={this.props.onDecrementCounter}/>
-                <CounterControl label="Add 5" clicked={() => this.props.onAddCounter(5)}/>
-                <CounterControl label="Subtract 5" clicked={() => this.props.onSubCounter(5)}/>
+                <div>
+                    <CounterOutput value={this.props.counter}/>
+                    <CounterControl label="Increment" clicked={this.props.onIncrementCounter}/>
+                    <CounterControl label="Decrement" clicked={this.props.onDecrementCounter}/>
+                    <CounterControl label="Add 5" clicked={() => this.props.onAddCounter(5)}/>
+                    <CounterControl label="Subtract 5" clicked={() => this.props.onSubCounter(5)}/>
+                </div>
+                <ul>
+                {
+                    this.props.results.map(result => {
+                        return <li key={result.id}>
+                            <button onClick={() => this.props.removeResult(result.id)}>{result.value}</button>
+                        </li>
+                    })
+                }
+            </ul>
             </div>
+
         );
     }
 }
@@ -42,7 +55,8 @@ class Counter extends Component {
 // map state from the store to props for the component
 const mapStateToProps = state => {
     return {
-        counter: state.counter
+        counter: state.counter,
+        results: state.results
     }
 };
 
@@ -51,7 +65,8 @@ const mapDispatchToprops = dispatch => {
         onIncrementCounter: () => dispatch({type: 'INCREMENT'}),
         onDecrementCounter: () => dispatch({type: 'DECREMENT'}),
         onAddCounter: (value) => dispatch({type: 'ADD', value: value}),
-        onSubCounter: (value) => dispatch({type: 'SUB', value: value})
+        onSubCounter: (value) => dispatch({type: 'SUB', value: value}),
+        removeResult : (id) => dispatch({type: 'REMOVE_RESULT' , payload : {id }})
     }
 }
 
